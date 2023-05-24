@@ -1,0 +1,80 @@
+create database BD_Inspeccion;
+use BD_Inspeccion;
+create table login
+(
+id int primary key auto_increment,
+usuario varchar(25),
+pass blob
+)
+select * from CategoriaEnt;
+
+Insert into login values(null, 'LOPESA', 'sql');
+
+create table Entidades
+(
+cod_Ent int primary key auto_increment,
+nom_Ent varchar(30),
+direc_Ent varchar(30),
+tel_Ent int,
+cod_Cat int
+);
+
+create table CategoriaEnt
+(
+cod_Cat int primary key auto_increment,
+nom_Cat varchar(20)
+);
+
+alter table Entidades add constraint fk01 foreign key(cod_Cat) references CategoriaEnt(cod_Cat);
+
+insert into CategoriaEnt values(null,'BANCO');
+insert into CategoriaEnt values(null,'CONSORCIO');
+insert into CategoriaEnt values(null,'INMOBILIARIA');
+insert into CategoriaEnt values(null,'SOCIEDAD');
+
+
+select * from Entidades;
+
+Create table Inpectores
+(
+cod_insp int key auto_increment,
+nom_insp varchar(20),
+ape_insp varchar(20),
+tel_insp int,
+fech_insp date
+)
+
+select * from Inpectores;
+
+
+create table Asignacion
+(
+cod_Asig int primary key auto_increment,
+Doc_Asig varchar(20),
+Fec_Asig date,
+cod_insp int,
+cod_Resu int
+);
+create table Resultado
+(
+cod_Resu int primary key auto_increment,
+nom_Resu varchar(20)
+);
+
+Alter table Asignacion add constraint fk02 foreign key(cod_Resu) references Resultado(cod_Resu);
+
+insert into Resultado values(null, 'Aprobado');
+insert into Resultado values(null, 'Desaprobado');
+
+Alter table Asignacion add constraint fk03 foreign key(cod_insp) references Inpectores(cod_insp);
+
+select * from CategoriaEnt;
+
+Create table inspeccionFin
+(
+cod_Inspeccion int primary key auto_increment,
+cod_Ent int,
+Fech_Inspeccion date,
+cod_insp int
+);
+select * from inspeccionFin
